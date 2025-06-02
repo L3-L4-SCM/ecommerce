@@ -1,31 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign In</title>
   <style>
-    body { font-family: Arial; background: #f2f2f2; padding: 50px; }
-    form { background: white; padding: 20px; max-width: 300px; margin: auto; border-radius: 8px; }
-    input { width: 100%; padding: 10px; margin: 8px 0; }
-    button { width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(120deg, #89f7fe, #66a6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #444;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      padding-right: 40px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #66a6ff;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 38px;
+      cursor: pointer;
+      color: #777;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #66a6ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #4f90e1;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    @media (max-width: 480px) {
+      .container {
+        margin: 10px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Sign In</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
+        <div id="emailError" class="error"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required />
+        <span class="toggle-password" onclick="togglePassword()">👁️</span>
+        <div id="passError" class="error"></div>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <div class="footer">
+      Don't have an account? <a href="#">Register</a>
+    </div>
+  </div>
 
-<h2 style="text-align:center;">Sign In</h2>
+  <script>
+    function togglePassword() {
+      const passInput = document.getElementById("password");
+      passInput.type = passInput.type === "password" ? "text" : "password";
+    }
 
-<form>
-  <label for="username">Username</label>
-  <input type="text" id="username" name="username" placeholder="Enter username" required>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const emailError = document.getElementById("emailError");
+      const passError = document.getElementById("passError");
 
-  <label for="password">Password</label>
-  <input type="password" id="password" name="password" placeholder="Enter password" required>
+      emailError.textContent = "";
+      passError.textContent = "";
 
-  <button type="submit">Sign In</button>
-</form>
+      let valid = true;
 
+      if (!email.value.includes("@")) {
+        emailError.textContent = "Please enter a valid email.";
+        valid = false;
+      }
+      if (password.value.length < 6) {
+        passError.textContent = "Password must be at least 6 characters.";
+        valid = false;
+      }
+
+      if (valid) {
+        alert("Logged in successfully!");
+        // Here, you can redirect or make a request
+      }
+    });
+  </script>
 </body>
 </html>
-
-
